@@ -18,7 +18,7 @@ sqlitePrepare : SQLite -> String -> IO (Either SqlResult Stmnt)
 sqlitePrepare (SQLiteH db) s = do
     st <- primIO $ sqlite_stmt_handle
     res <- primIO $ sqlite_prepare db s 1 st null
-    pure $ if fromInt res == SQLITE_OK
+    pure $ if res == (toInt SQLITE_OK)
       then Right (StmntH st)
       else Left (fromInt res)
 
